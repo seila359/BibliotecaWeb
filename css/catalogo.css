@@ -1,0 +1,224 @@
+/* ==========================================================
+   catalogo.css — estilos exclusivos da página de catálogo
+   Carregado depois de base.css e painel.css, então as regras
+   daqui sobrescrevem as duas quando o valor é diferente.
+
+   O que NÃO está aqui (por já existir em base.css e ser igual):
+   reset (*), body, header, header h1, nav a (+hover/.active),
+   .hero, .container, .button, .button-outline, .badge,
+   .badge-success, .badge-danger, footer, media query do header.
+   ========================================================== */
+
+/* ---------- Painel de filtros ---------- */
+.filter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 35px;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-header h3 {
+    color: #243447;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#results-count {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Botão secundário (cinza), usado em "Limpar filtros" */
+.button-secondary {
+    background: #7f8c8d;
+}
+
+.button-secondary:hover {
+    background: #6c7a89;
+}
+
+/* Categoria em destaque no card e no modal */
+.badge-category {
+    background: #ebf5fb;
+    color: #2980b9;
+}
+
+/* ---------- Grid de livros (ajustes sobre painel.css) ---------- */
+.books {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.book:hover {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.book-cover {
+    height: 220px;
+    font-size: 42px;
+    position: relative;
+}
+
+.book-cover-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.book-info h3 {
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.book-author {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.book-meta {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.book-description-snippet {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.no-results {
+    text-align: center;
+    padding: 50px 20px;
+    color: #7f8c8d;
+    background: white;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+}
+
+/* ---------- Modal de detalhes ---------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: catalogoFadeIn 0.3s ease;
+}
+
+@keyframes catalogoFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    background: #243447;
+    color: white;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+}
+
+.detail-label {
+    width: 170px;
+    flex-shrink: 0;
+    font-weight: bold;
+    color: #243447;
+    font-size: 14px;
+}
+
+.detail-value {
+    flex-grow: 1;
+    color: #444;
+    font-size: 14px;
+}
+
+.detail-value code {
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 768px) {
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .detail-label {
+        width: 100%;
+        margin-bottom: 3px;
+    }
+}

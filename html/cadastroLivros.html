@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Livros - BiblioTech</title>
+    
+    <!-- Carregando a biblioteca do Supabase -->
+    <link rel="stylesheet" href="../css/cadastroLivros.css">
+    
+</head>
+<body>
+
+    <!-- Etapa 3 - Estrutura HTML -->
+    <div class="container">
+        <header>
+            <h1>Cadastrar Novo Livro</h1>
+        </header>
+
+        <form id="formCadastro">
+            <div class="form-group">
+                <label for="titulo">Título do Livro *</label>
+                <input type="text" id="titulo" name="titulo" required placeholder="Ex: Dom Casmurro">
+            </div>
+
+            <div class="form-group">
+                <label for="autor">Autor *</label>
+                <input type="text" id="autor" name="autor" required placeholder="Ex: Machado de Assis">
+            </div>
+
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" name="isbn" placeholder="Ex: 9788535911664">
+            </div>
+
+            <div class="form-group">
+                <label for="ano">Ano de Publicação</label>
+                <input type="number" id="ano" name="ano" min="1000" max="2100" placeholder="Ex: 1899">
+            </div>
+
+            <div class="form-group">
+                <label for="quantidade">Quantidade em Estoque *</label>
+                <input type="number" id="quantidade" name="quantidade" required min="1" value="1">
+            </div>
+
+            <button type="submit" id="btnSalvar">Salvar Livro</button>
+        </form>
+
+        <div id="mensagem"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../src/config.js"></script>
+    <script src="../src/common.js"></script>
+    <script src="../src/cadastroLivro.js"></script>
+    
+</body>
+</html>

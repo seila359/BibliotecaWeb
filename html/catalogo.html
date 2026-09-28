@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Minha Biblioteca</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/painel.css">
+    <link rel="stylesheet" href="../css/catalogo.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Minha Biblioteca</h1>
+        <nav>
+            <a href="#" class="active">Catálogo de Livros</a>
+            <a href="#">Meus Empréstimos</a>
+            <a href="#">Histórico & Multas</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Catálogo de Acervo</h2>
+        <p>Explore e consulte os livros disponíveis em nossa biblioteca física e digital.</p>
+    </section>
+
+    <main class="container">
+
+        <section class="filter-card">
+            <div class="filter-header">
+                <h3>🔍 Filtros de Pesquisa (Tabela Livros)</h3>
+                <span style="font-size: 13px; color: #666;" id="results-count">Exibindo todos os livros</span>
+            </div>
+
+            <div class="filter-grid">
+                <!-- Título -->
+                <div class="form-group">
+                    <label for="filter-titulo">Título</label>
+                    <input type="text" id="filter-titulo" class="form-input" placeholder="Ex: Dom Casmurro...">
+                </div>
+
+                <!-- Autor -->
+                <div class="form-group">
+                    <label for="filter-autor">Autor</label>
+                    <input type="text" id="filter-autor" class="form-input" placeholder="Ex: Machado de Assis...">
+                </div>
+
+                <!-- ISBN -->
+                <div class="form-group">
+                    <label for="filter-isbn">ISBN</label>
+                    <input type="text" id="filter-isbn" class="form-input" placeholder="Ex: 978-...">
+                </div>
+
+                <!-- Editora -->
+                <div class="form-group">
+                    <label for="filter-editora">Editora</label>
+                    <input type="text" id="filter-editora" class="form-input" placeholder="Ex: Companhia das Letras...">
+                </div>
+
+                <!-- Ano Publicação -->
+                <div class="form-group">
+                    <label for="filter-ano">Ano de Publicação</label>
+                    <input type="number" id="filter-ano" class="form-input" placeholder="Ex: 1949">
+                </div>
+
+                <!-- Categoria -->
+                <div class="form-group">
+                    <label for="filter-categoria">Categoria</label>
+                    <select id="filter-categoria" class="form-select">
+                        <option value="">Todas as Categorias</option>
+                        <option value="Ficção Científica">Ficção Científica</option>
+                        <option value="Literatura Brasileira">Literatura Brasileira</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="História">História</option>
+                        <option value="Romance">Romance</option>
+                    </select>
+                </div>
+
+                <!-- Descrição -->
+                <div class="form-group">
+                    <label for="filter-descricao">Palavra-chave na Descrição</label>
+                    <input type="text" id="filter-descricao" class="form-input" placeholder="Ex: distopia, código...">
+                </div>
+
+                <!-- Disponibilidade -->
+                <div class="form-group">
+                    <label for="filter-disponivel">Disponibilidade</label>
+                    <select id="filter-disponivel" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="disponivel">Apenas Disponíveis (&gt;0)</option>
+                        <option value="indisponivel">Indisponíveis (0)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="button" class="button button-secondary" onclick="limparFiltros()">Limpar Filtros</button>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">
+                <h2>Acervo Encontrado</h2>
+            </div>
+
+            <div class="books" id="bookGrid">
+                <!-- Injetado via JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal-overlay" id="bookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Detalhes do Livro</h3>
+                <button class="close-btn" onclick="fecharModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Conteúdo do banco injetado dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Minha Biblioteca. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../src/config.js"></script>
+    <script src="../src/common.js"></script>
+    <script src="../src/catalogo.js"></script>
+</body>
+</html>
