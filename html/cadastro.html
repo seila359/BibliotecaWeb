@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro</title>
+
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/cadastro.css" />
+
+  </head>
+  <body>
+    <main class="container">
+
+        <div class="card cadastro-card">
+            <h3>Criar Conta</h3>
+
+            <form id="cadastro-form">
+                <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" class="form-input" placeholder="Seu nome" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="user-login">E-mail</label>
+                    <input type="email" class="form-input" id="user-login" placeholder="seu@email.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="user-pass">Senha</label>
+                    <input type="password" id="user-pass" class="form-input" placeholder="Mínimo 6 caracteres" minlength="6" required/>
+                </div>
+
+                <button type="submit" class="button" id="btn-submit">Cadastrar</button>
+                <div id="message"></div>
+            </form>
+
+            <input type="button" class="button" id="btn-google" value="Login Google">
+
+            <div class="footer-link">
+                <h4>
+                    Já tem uma conta? <a target="_self" href="../html/login.html">Fazer login</a>
+                </h4>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="../src/common/common.js"></script>
+    <script type="module" src="../src/cadastro/cadastro.js"></script>
+  </body>
+</html>

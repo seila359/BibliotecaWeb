@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Bibliotecário - Minha Biblioteca</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/painelAdministrativo.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>📚 Painel Administrativo</h1>
+      <nav class="view-header-nav" id="main-nav">
+        <a href="#" data-navigate="view-dashboard" class="active"
+          >Painel de Controle</a
+        >
+        <a href="#" data-action="logout">Sair do Sistema</a>
+      </nav>
+    </header>
+
+    <!-- Sistema de Notificações Toast -->
+    <div id="toast-container"></div>
+
+    <!-- Main Content (SPA Views) -->
+    <main class="container">
+      <!-- ================= VIEW: DASHBOARD ================= -->
+      <section id="view-dashboard" class="view active">
+        <div class="card-header" style="border: none">
+          <h2>Painel de Controle</h2>
+          <p style="color: #666; margin-top: 5px">
+            Selecione uma das opções abaixo para gerenciar o acervo e
+            empréstimos.
+          </p>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dash-card" data-navigate="view-cadastrar-livro">
+            <div class="dash-icon">📖</div>
+            <h3 class="dash-title">Cadastrar / Editar Livro</h3>
+            <p style="color: #777; font-size: 14px">
+              Adicione novos exemplares ao banco de dados ou atualize
+              informações.
+            </p>
+          </div>
+
+          <div class="dash-card" data-navigate="view-devolucao">
+            <div class="dash-icon">🔄</div>
+            <h3 class="dash-title">Processar Devolução</h3>
+            <p style="color: #777; font-size: 14px">
+              Registre o retorno de exemplares e verifique status de multas
+              pendentes.
+            </p>
+          </div>
+
+          <div class="dash-card" data-navigate="view-cadastrar-usuario">
+            <div class="dash-icon">👤</div>
+            <h3 class="dash-title">Cadastrar Usuário</h3>
+            <p style="color: #777; font-size: 14px">
+              Adicione novos usuários ao sistema ou atualize suas informações.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: CADASTRAR LIVRO ================= -->
+      <section id="view-cadastrar-livro" class="view">
+        <div class="card">
+          <div class="card-header">
+            <h2>Cadastrar / Editar Livro</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 5px">
+              Mapeamento da tabela: <code>livros</code>
+            </p>
+          </div>
+
+          <form id="form-cadastrar">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="titulo">Título do Livro *</label>
+                <input
+                  type="text"
+                  id="titulo"
+                  class="form-control"
+                  name="titulo"
+                  required
+                  placeholder="Ex: Dom Casmurro"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="autor">Autor *</label>
+                <input
+                  type="text"
+                  id="autor"
+                  class="form-control"
+                  name="autor"
+                  required
+                  placeholder="Ex: Machado de Assis"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input
+                  type="text"
+                  id="isbn"
+                  class="form-control"
+                  name="isbn"
+                  placeholder="Ex: 9788535911664"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="ano">Ano de Publicação</label>
+                <input
+                  type="number"
+                  id="ano"
+                  class="form-control"
+                  name="ano"
+                  min="1000"
+                  max="2100"
+                  placeholder="Ex: 1899"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="quantidade">Quantidade em Estoque *</label>
+                <input
+                  type="number"
+                  id="quantidade"
+                  class="form-control"
+                  name="quantidade"
+                  required
+                  min="1"
+                  value="1"
+                />
+              </div>
+            </div>
+            <button type="submit" id="btnSalvar" class="btn">
+              Salvar Livro
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-navigate="view-dashboard"
+            >
+              Voltar
+            </button>
+          </form>
+
+          <div id="mensagem"></div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: PROCESSAR DEVOLUÇÃO ================= -->
+      <section id="view-devolucao" class="view">
+        <div class="card">
+          <div class="card-header">
+            <h2>Processar Devolução</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 5px">
+              Mapeamento das tabelas: <code>emprestimos</code> e
+              <code>livros</code>
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"
+              >Digitar / Escanear Código (ID do Empréstimo)</label
+            >
+            <div style="display: flex; gap: 10px">
+              <input
+                type="text"
+                id="codigo-emprestimo"
+                class="form-control"
+                placeholder="Ex: a1b2c3d4-e5f6-..."
+                style="flex-grow: 1"
+              />
+              <button type="button" class="btn" data-action="verificar-atraso">
+                Verificar Atraso
+              </button>
+            </div>
+          </div>
+
+          <!-- Box de Resultado Dinâmico -->
+          <div id="resultado-devolucao" class="result-box">
+            <div id="devolucao-badge" class="status-badge">Analisando...</div>
+
+            <div class="result-details" id="devolucao-detalhes">
+              <!-- Conteúdo injetado via JS -->
+            </div>
+
+            <!-- Botões injetados dinamicamente baseados no status -->
+            <div class="result-actions" id="devolucao-acoes">
+              <!-- Conteúdo injetado via JS -->
+            </div>
+          </div>
+
+          <div style="margin-top: 25px">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-action="fechar-devolucao"
+            >
+              Voltar ao Início
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW: CADASTRAR USUÁRIO ================= -->
+      <section id="view-cadastrar-usuario" class="view">
+        <div class="container">
+          <!-- Form Column -->
+          <section class="card">
+            <div class="card-header">
+              <h3>👤 Dados Cadastrais (Tabela `profiles`)</h3>
+              <span style="font-size: 12px; color: #7f8c8d"
+                ><span class="required-star">*</span> Campos Obrigatórios</span
+              >
+            </div>
+
+            <div id="alert-box" class="alert">
+              Usuário cadastrado com sucesso!
+            </div>
+
+            <form id="form-staff">
+              <div class="form-grid">
+                <!-- Nome -->
+                <div class="form-group full-width">
+                  <label for="nome"
+                    >Nome Completo <span class="required-star">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="nome"
+                    class="form-input"
+                    placeholder="Ex: Maria de Oliveira"
+                    required
+                    data-preview
+                  />
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group full-width">
+                  <label for="email"
+                    >E-mail de Acesso
+                    <span class="required-star">*</span></label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-input"
+                    placeholder="maria@email.com"
+                    required
+                    data-preview
+                  />
+                </div>
+
+                <!-- Senha -->
+                <div class="form-group">
+                  <label for="senha"
+                    >Senha <span class="required-star">*</span></label
+                  >
+                  <input
+                    type="password"
+                    id="senha"
+                    class="form-input"
+                    placeholder="••••••••"
+                    required
+                    data-validar-senha
+                  />
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div class="form-group">
+                  <label for="confirma_senha"
+                    >Confirmar Senha <span class="required-star">*</span></label
+                  >
+                  <input
+                    type="password"
+                    id="confirma_senha"
+                    class="form-input"
+                    placeholder="••••••••"
+                    required
+                    data-validar-senha
+                  />
+                  <span id="senha-error" class="error-message"
+                    >As senhas não coincidem.</span
+                  >
+                </div>
+
+                <!-- Papel (Enum papel_usuario) -->
+                <div class="form-group">
+                  <label for="papel"
+                    >Papel do Usuário (Enum)
+                    <span class="required-star">*</span></label
+                  >
+                  <select id="papel" class="form-select" required data-preview>
+                    <option value="bibliotecario">Bibliotecário</option>
+                    <option value="administrador">Administrador</option>
+                  </select>
+                </div>
+
+                <!-- Avatar URL -->
+                <div class="form-group">
+                  <label for="avatar_url">URL do Avatar (Foto de Perfil)</label>
+                  <input
+                    type="url"
+                    id="avatar_url"
+                    class="form-input"
+                    placeholder="https://exemplo.com/foto.jpg"
+                    data-preview
+                  />
+                </div>
+
+                <!-- Avatar Live Preview Card -->
+                <div class="form-group full-width">
+                  <label>Pré-visualização do Avatar</label>
+                  <div class="avatar-preview-wrapper">
+                    <div id="avatar-container">
+                      <div class="avatar-img" id="avatar-fallback">MO</div>
+                      <img
+                        id="avatar-img-element"
+                        class="avatar-img"
+                        style="display: none"
+                        alt="Preview Avatar"
+                      />
+                    </div>
+                    <div>
+                      <div
+                        id="preview-nome"
+                        style="
+                          font-weight: bold;
+                          color: #243447;
+                          font-size: 16px;
+                        "
+                      >
+                        Maria de Oliveira
+                      </div>
+                      <div
+                        id="preview-email"
+                        style="font-size: 13px; color: #666; margin-bottom: 6px"
+                      >
+                        maria@email.com
+                      </div>
+                      <span id="preview-badge" class="badge badge-leitor"
+                        >Leitor</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  margin-top: 25px;
+                  display: flex;
+                  gap: 12px;
+                  justify-content: flex-end;
+                "
+              >
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-action="fechar-devolucao"
+                >
+                  Voltar ao Início
+                </button>
+                <button
+                  data-action="resetar-formulario"
+                  type="reset"
+                  class="button button-secondary"
+                >
+                  Limpar
+                </button>
+                <button type="submit" class="button">Cadastrar Usuário</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Minha Biblioteca. Painel Administrativo.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="../src/common/common.js"></script>
+    <script
+      type="module"
+      src="../src/painelAdministrativo/painelAdministrativo.js"
+    ></script>
+  </body>
+</html>

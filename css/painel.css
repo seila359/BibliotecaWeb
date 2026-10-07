@@ -1,0 +1,185 @@
+/* ==========================================================
+   painel.css — estilos exclusivos do painel do leitor
+   ========================================================== */
+
+/* ---------- Abas ---------- */
+.section-title .total {
+  color: #666;
+  font-size: 15px;
+}
+
+/* ---------- Perfil ---------- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #3498db;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.profile-info h3 {
+  color: #243447;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.profile-info p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* ---------- Empréstimos (livros) ---------- */
+.books {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.book {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.book:hover {
+  transform: translateY(-5px);
+}
+
+.book-cover {
+  height: 200px;
+  background: #dfe6e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #636e72;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.book-cover.azul {
+  background: #e1f5fe;
+  color: #0288d1;
+}
+
+.book-cover.laranja {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.book-info {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-info h3 {
+  margin-bottom: 8px;
+  color: #243447;
+}
+
+.book-info p {
+  color: #666;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.book-info .badge {
+  margin-bottom: 12px;
+}
+
+.book-info .button {
+  width: 100%;
+}
+
+.loan-dates {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0 15px 0;
+  font-size: 13px;
+}
+
+.loan-dates div {
+  margin-bottom: 4px;
+}
+
+.data-ok {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.data-atraso {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* ---------- Histórico & multas ---------- */
+.table-responsive {
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #243447;
+  color: white;
+  font-weight: normal;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: #f9fbfd;
+}
+
+.multa-pendente {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.multa-paga {
+  color: #27ae60;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 700px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
