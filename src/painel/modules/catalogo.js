@@ -9,7 +9,14 @@
    ========================================================== */
 
 import { db } from "../../config.js";
-import { esc, plural, dataHoraBR, normalizar, mostrarAlerta} from "../../common/common.js";
+import {
+  esc,
+  plural,
+  dataHoraBR,
+  normalizar,
+  mostrarAlerta,
+} from "../../common/common.js";
+import { solicitarEmprestimo } from "./solicitarEmprestimo.js";
 
 let bancoLivros = []; // livros carregados do Supabase (filtro é feito no cliente)
 
@@ -68,9 +75,7 @@ export function popularCategorias(livros) {
   select.value = atual;
 }
 
-//
-
-export function tratarCliques(ev) {
+export async function tratarCliques(ev) {
   if (!ev || !ev.target) return;
 
   const detalhes = ev.target.closest('[data-action="detalhes"]');
@@ -83,6 +88,17 @@ export function tratarCliques(ev) {
       break;
     case "fechar-modal":
       fecharModal();
+      break;
+    case "solicitar-emprestimo":
+      const livroId = btn.dataset.livroId;
+      btn.disabled = true;
+      try {
+        await solicitarEmprestimo(livroId);
+        fecharModal();
+        await carregarLivros(); // Recarrega a lista para atualizar o estoque disponível
+      } finally {
+        btn.disabled = false;
+      }
       break;
   }
 
@@ -260,6 +276,27 @@ export function abrirModal(id) {
             <div class="detail-value">${dataHoraBR(livro.created_at)}</div>
         </div>
     `;
+
+  document.getElementById("modal-footer-actions").innerHTML = `
+    <button
+      type="button"
+      class="button button-secondary"
+      id="previa-livro-btn"
+      data-action="previa-livro"
+    >
+      Prévia do Livro
+    </button>
+    <button
+      type="button"
+      class="button button-secondary"
+      id="solicitar-emprestimo-btn"
+      data-action="solicitar-emprestimo"
+      data-livro-id="${esc(livro.id)}"
+      ${livro.quantidade_disponivel === 0 ? 'disabled title="Livro indisponível"' : ""}
+    >
+      ${livro.quantidade_disponivel > 0 ? "Solicitar Empréstimo" : "Indisponível"}
+    </button>
+  `;
 
   document.getElementById("bookModal").classList.add("active");
 }
