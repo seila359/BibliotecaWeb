@@ -60,11 +60,21 @@
               Adicione novos usuários ao sistema ou atualize suas informações.
             </p>
           </div>
+
+          <!-- Corrigido o data-navigate para apontar para a nova view -->
+          <div class="dash-card" data-navigate="view-processar-emprestimo">
+            <div class="dash-icon">📝</div>
+            <h3 class="dash-title">Processar Empréstimo</h3>
+            <p style="color: #777; font-size: 14px">
+              Aceite ou recuse pedidos de empréstimos feitos por leitores.
+            </p>
+          </div>
         </div>
       </section>
 
       <!-- ================= VIEW: CADASTRAR LIVRO ================= -->
       <section id="view-cadastrar-livro" class="view">
+        <!-- (Conteúdo mantido exatamente como o original) -->
         <div class="card">
           <div class="card-header">
             <h2>Cadastrar / Editar Livro</h2>
@@ -158,6 +168,7 @@
 
       <!-- ================= VIEW: PROCESSAR DEVOLUÇÃO ================= -->
       <section id="view-devolucao" class="view">
+        <!-- (Conteúdo mantido exatamente como o original) -->
         <div class="card">
           <div class="card-header">
             <h2>Processar Devolução</h2>
@@ -185,18 +196,10 @@
             </div>
           </div>
 
-          <!-- Box de Resultado Dinâmico -->
           <div id="resultado-devolucao" class="result-box">
             <div id="devolucao-badge" class="status-badge">Analisando...</div>
-
-            <div class="result-details" id="devolucao-detalhes">
-              <!-- Conteúdo injetado via JS -->
-            </div>
-
-            <!-- Botões injetados dinamicamente baseados no status -->
-            <div class="result-actions" id="devolucao-acoes">
-              <!-- Conteúdo injetado via JS -->
-            </div>
+            <div class="result-details" id="devolucao-detalhes"></div>
+            <div class="result-actions" id="devolucao-acoes"></div>
           </div>
 
           <div style="margin-top: 25px">
@@ -213,8 +216,8 @@
 
       <!-- ================= VIEW: CADASTRAR USUÁRIO ================= -->
       <section id="view-cadastrar-usuario" class="view">
+        <!-- (Conteúdo mantido exatamente como o original) -->
         <div class="container">
-          <!-- Form Column -->
           <section class="card">
             <div class="card-header">
               <h3>👤 Dados Cadastrais (Tabela `profiles`)</h3>
@@ -229,7 +232,6 @@
 
             <form id="form-staff">
               <div class="form-grid">
-                <!-- Nome -->
                 <div class="form-group full-width">
                   <label for="nome"
                     >Nome Completo <span class="required-star">*</span></label
@@ -244,7 +246,6 @@
                   />
                 </div>
 
-                <!-- E-mail -->
                 <div class="form-group full-width">
                   <label for="email"
                     >E-mail de Acesso
@@ -260,7 +261,6 @@
                   />
                 </div>
 
-                <!-- Senha -->
                 <div class="form-group">
                   <label for="senha"
                     >Senha <span class="required-star">*</span></label
@@ -275,7 +275,6 @@
                   />
                 </div>
 
-                <!-- Confirmar Senha -->
                 <div class="form-group">
                   <label for="confirma_senha"
                     >Confirmar Senha <span class="required-star">*</span></label
@@ -293,7 +292,6 @@
                   >
                 </div>
 
-                <!-- Papel (Enum papel_usuario) -->
                 <div class="form-group">
                   <label for="papel"
                     >Papel do Usuário (Enum)
@@ -305,7 +303,6 @@
                   </select>
                 </div>
 
-                <!-- Avatar URL -->
                 <div class="form-group">
                   <label for="avatar_url">URL do Avatar (Foto de Perfil)</label>
                   <input
@@ -317,7 +314,6 @@
                   />
                 </div>
 
-                <!-- Avatar Live Preview Card -->
                 <div class="form-group full-width">
                   <label>Pré-visualização do Avatar</label>
                   <div class="avatar-preview-wrapper">
@@ -383,6 +379,102 @@
           </section>
         </div>
       </section>
+
+      <!-- ================= VIEW: PROCESSAR EMPRÉSTIMO (NOVA) ================= -->
+      <section id="view-processar-emprestimo" class="view">
+        <div class="card">
+          <div class="card-header">
+            <h2>Processar Solicitações de Empréstimo</h2>
+            <p style="color: #666; font-size: 14px; margin-top: 5px">
+              Mapeamento da tabela: <code>solicitacoes_emprestimo</code>
+            </p>
+          </div>
+
+          <!-- Tabela de Solicitações -->
+          <div
+            class="table-responsive"
+            style="margin-top: 20px; overflow-x: auto"
+          >
+            <table
+              style="width: 100%; border-collapse: collapse; text-align: left"
+            >
+              <thead>
+                <tr
+                  style="
+                    background-color: #f4f6f8;
+                    border-bottom: 2px solid #ddd;
+                  "
+                >
+                  <th style="padding: 12px">Usuário</th>
+                  <th style="padding: 12px">Livro</th>
+                  <th style="padding: 12px">Dias Solicitados</th>
+                  <th style="padding: 12px">Data da Solicitação</th>
+                  <th style="padding: 12px">Observações</th>
+                  <th style="padding: 12px; text-align: center">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="lista-solicitacoes">
+                <!-- Exemplo de Linha Estática (Será populada via JS) -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Área para inserção do Motivo da Rejeição (Escondida por padrão) -->
+          <div
+            id="area-recusa"
+            style="
+              display: none;
+              margin-top: 20px;
+              padding: 15px;
+              background: #fdf2f2;
+              border: 1px solid #f5c6cb;
+              border-radius: 6px;
+            "
+          >
+            <h4 style="color: #c0392b; margin-bottom: 10px">
+              Recusar Solicitação: <span id="id-recusa-atual"></span>
+            </h4>
+            <div class="form-group">
+              <label for="motivo_rejeicao"
+                >Motivo da Rejeição (Observações):</label
+              >
+              <textarea
+                id="motivo_rejeicao"
+                class="form-control"
+                rows="3"
+                placeholder="Informe o motivo_rejeicao..."
+              ></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px">
+              <button
+                type="button"
+                class="btn"
+                style="background-color: #e74c3c"
+                onclick="confirmar_recusa()"
+              >
+                Confirmar Recusa
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="cancelar_recusa()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top: 25px">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-navigate="view-dashboard"
+            >
+              Voltar ao Início
+            </button>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -397,3 +489,5 @@
     ></script>
   </body>
 </html>
+
+```

@@ -5,7 +5,7 @@ import { exigirPapel } from "../auth/exigirPapel.js";
 import { navigate } from "../common/modules/navigate.js";
 import { salvarPerfil } from "./modules/perfil.js";
 import { iniciarCatalogo } from "./modules/catalogo.js";
-import { tratarCliques } from "./modules/catalogo.js";
+import { iniciarEmprestimosAtivos } from "./modules/renderizarEmprestimos.js";
 
 // Proteção: sem sessão ou sem papel, volta para o login
 if (!(await estaLogado())) {
@@ -18,10 +18,8 @@ if (!(await exigirPapel(["leitor"]))) {
   throw new Error("Papel não permitido");
 }
 
-const usuario = obter();
-//carregarUsuario(usuario);
-
 iniciarCatalogo();
+iniciarEmprestimosAtivos;
 
 document.addEventListener("click", async (e) => {
   const nav = e.target.closest("[data-navigate]");

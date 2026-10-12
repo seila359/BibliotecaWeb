@@ -5,6 +5,7 @@ import { estaLogado } from "../auth/checarSessao.js";
 import { exigirPapel } from "../auth/exigirPapel.js";
 import { criarStaff } from "./modules/novosUsuarios.js";
 import { sair } from "../auth/sair.js";
+import { carregarSolicitacoes } from "./modules/processarPedidoEmprestimo.js";
 
 // -------- Proteção de rota --------
 if (!(await estaLogado())) {
@@ -17,12 +18,25 @@ if (!(await exigirPapel(["admin", "bibliotecario"]))) {
   throw new Error("Papel não permitido");
 }
 
+// -------- Ações a executar ao entrar em cada view --------
+// Centraliza aqui em vez de if/else soltos: fica fácil adicionar
+// outras views que precisam carregar dados ao navegar pra elas.
+const aoEntrarNaView = {
+  "view-processar-emprestimo": carregarSolicitacoes,
+  // "view-outra-coisa": carregarOutraCoisa,
+};
+
 // -------- Delegação de clicks (NAV + ações que NÃO são submit) --------
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   const nav = e.target.closest("[data-navigate]");
   if (nav) {
     e.preventDefault();
-    navigate(nav.dataset.navigate);
+
+    const destino = nav.dataset.navigate;
+    const carregar = aoEntrarNaView[destino];
+    if (carregar) await carregar();
+
+    navigate(destino);
     return;
   }
 
