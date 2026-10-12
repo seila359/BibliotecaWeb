@@ -1,6 +1,6 @@
 import { estaLogado } from "../auth/checarSessao.js";
 import { obter } from "../auth/checarUsuario.js";
-import { sair } from "../auth/sair.js"
+import { sair } from "../auth/sair.js";
 import { exigirPapel } from "../auth/exigirPapel.js";
 import { navigate } from "../common/modules/navigate.js";
 import { salvarPerfil } from "./modules/perfil.js";
@@ -23,9 +23,7 @@ const usuario = obter();
 
 iniciarCatalogo();
 
-
 document.addEventListener("click", async (e) => {
-
   const nav = e.target.closest("[data-navigate]");
   if (nav) {
     e.preventDefault();
@@ -33,8 +31,6 @@ document.addEventListener("click", async (e) => {
     return;
   }
 
-  tratarCliques(e);
-  
   const acao = e.target.closest("[data-action]");
   if (!acao) return;
 
@@ -52,7 +48,6 @@ document.addEventListener("click", async (e) => {
       fecharDevolucao();
       break;
   }
-
 });
 
 document
