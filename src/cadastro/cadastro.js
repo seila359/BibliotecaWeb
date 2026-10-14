@@ -1,5 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { db } from "../config.js";
 
+document.addEventListener("DOMContentLoaded", () => {
   const cadastroForm = document.getElementById("cadastro-form");
   const nomeInput = document.getElementById("nome");
   const emailInput = document.getElementById("user-login");
@@ -50,25 +51,22 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Cadastrar";
 
     cadastroForm.reset();
-  })
+  });
 
-  googleBtn.addEventListener("click", async ()=>{
-
+  googleBtn.addEventListener("click", async () => {
     googleBtn.disabled = true;
 
-    const{data, error} = await db.auth.signInWithOAuth({
+    const { data, error } = await db.auth.signInWithOAuth({
       provider: "google",
-      options:{
-        redirectTo: 'http://localhost:5500/html/painel.html'
-      }
-    })
+      options: {
+        redirectTo: "http://127.0.0.1:5500/html/login.html",
+      },
+    });
 
     if (error) {
       messageDiv.textContent = "Erro ao conectar com Google: " + error.message;
       messageDiv.className = "error";
       googleBtn.disabled = false;
     }
-
-  })
-  
+  });
 });

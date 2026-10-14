@@ -1,11 +1,11 @@
 import { estaLogado } from "../auth/checarSessao.js";
-import { obter } from "../auth/checarUsuario.js";
 import { sair } from "../auth/sair.js";
 import { exigirPapel } from "../auth/exigirPapel.js";
 import { navigate } from "../common/modules/navigate.js";
-import { salvarPerfil } from "./modules/perfil.js";
 import { iniciarCatalogo } from "./modules/catalogo.js";
 import { iniciarEmprestimosAtivos } from "./modules/renderizarEmprestimos.js";
+import { carregarPerfil, salvarPerfil } from "./modules/perfil.js";
+import { carregarHistorico } from "./modules/historico.js";
 
 // Proteção: sem sessão ou sem papel, volta para o login
 if (!(await estaLogado())) {
@@ -18,8 +18,10 @@ if (!(await exigirPapel(["leitor"]))) {
   throw new Error("Papel não permitido");
 }
 
+carregarPerfil();
 iniciarCatalogo();
-iniciarEmprestimosAtivos;
+iniciarEmprestimosAtivos();
+carregarHistorico();
 
 document.addEventListener("click", async (e) => {
   const nav = e.target.closest("[data-navigate]");
@@ -48,6 +50,4 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-document
-  .getElementById("form-perfil")
-  .addEventListener("submit", (e) => salvarPerfil(e, usuario));
+document.querySelector("form-perfil")?.addEventListener("submit", salvarPerfil);
