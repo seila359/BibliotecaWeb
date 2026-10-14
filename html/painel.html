@@ -38,73 +38,11 @@
         <div class="section-title">
           <h2>📖 Empréstimos Ativos</h2>
           <span class="total" id="results-count-emprestimos"
-            >Total: 2 livros</span
+            >Total: carregando</span
           >
         </div>
 
-        <div class="books" id="bookGridEmprestimosAtivos">
-          <!-- Livro 1 -->
-          <article class="book">
-            <div class="book-cover azul">📕 Livro</div>
-
-            <div class="book-info">
-              <div>
-                <h3>1984</h3>
-                <p>George Orwell</p>
-
-                <div class="loan-dates">
-                  <div><strong>Retirada:</strong> 10/02/2026</div>
-                  <div>
-                    <strong>Devolução:</strong>
-                    <span class="data-ok">05/03/2026</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span class="badge badge-success">Em Dia</span>
-                <button
-                  class="button"
-                  data-action="renovar-livro"
-                  data-livro="1984"
-                >
-                  Renovar Empréstimo
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- Livro 2 -->
-          <article class="book">
-            <div class="book-cover laranja">📙 Livro</div>
-
-            <div class="book-info">
-              <div>
-                <h3>O Algoritmo Mestre</h3>
-                <p>Pedro Domingos</p>
-
-                <div class="loan-dates">
-                  <div><strong>Retirada:</strong> 01/02/2026</div>
-                  <div>
-                    <strong>Devolução:</strong>
-                    <span class="data-atraso">22/02/2026</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span class="badge badge-danger">Atrasado (3 dias)</span>
-                <button
-                  class="button button-disabled"
-                  disabled
-                  title="Livro em atraso não pode ser renovado online"
-                >
-                  Renovação Indisponível
-                </button>
-              </div>
-            </div>
-          </article>
-        </div>
+        <div class="books" id="bookGridEmprestimosAtivos"></div>
       </section>
 
       <!-- ABA 2: CATÁLOGO -->
@@ -268,39 +206,8 @@
                 <th>Multa</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>O Pequeno Príncipe</strong></td>
-                <td>Antoine de Saint-Exupéry</td>
-                <td>15/01/2026</td>
-                <td><span class="badge badge-success">Devolvido</span></td>
-                <td>R$ 0,00</td>
-              </tr>
-              <tr>
-                <td><strong>Dom Casmurro</strong></td>
-                <td>Machado de Assis</td>
-                <td>02/12/2025</td>
-                <td>
-                  <span class="badge badge-warning">Devolvido c/ Atraso</span>
-                </td>
-                <td><span class="multa-pendente">R$ 4,50 (Pendente)</span></td>
-              </tr>
-              <tr>
-                <td><strong>Clean Code</strong></td>
-                <td>Robert C. Martin</td>
-                <td>10/11/2025</td>
-                <td><span class="badge badge-success">Devolvido</span></td>
-                <td>R$ 0,00</td>
-              </tr>
-              <tr>
-                <td><strong>O Hobbit</strong></td>
-                <td>J.R.R. Tolkien</td>
-                <td>05/09/2025</td>
-                <td>
-                  <span class="badge badge-warning">Devolvido c/ Atraso</span>
-                </td>
-                <td><span class="multa-paga">R$ 2,00 (Paga)</span></td>
-              </tr>
+            <tbody id="lista-historico">
+              <!-- Injetado via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -319,12 +226,12 @@
               <h3 id="perfil-nome"></h3>
               <p>
                 Matrícula: <strong id="perfil-matricula"></strong> | Categoria:
-                <span id="perfil-categoria"></span>
+                <span id="perfilPapel"></span>
               </p>
             </div>
           </div>
 
-          <form id="form-perfil">
+          <form id="formPerfil">
             <div class="form-group">
               <label for="email">E-mail Cadastrado</label>
               <input type="email" id="email" class="form-input" />

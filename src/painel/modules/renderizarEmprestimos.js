@@ -85,7 +85,7 @@ function renderizarEmprestimos(emprestimos) {
   const total = emprestimos.length;
 
   if (contador) {
-    contador.textContent = `Total: ${total} ${plural(total, "empréstimo", "empréstimos")}`;
+    contador.textContent = `Total: ${plural(total, "livro", "livros")}`;
   }
 
   if (total === 0) {
@@ -102,6 +102,7 @@ function renderizarEmprestimos(emprestimos) {
 
       const classeData = atrasado ? "data-atraso" : "data-ok";
       const classeBadge = atrasado ? "badge-danger" : "badge-success";
+      // Calculando dias de atraso se necessário (opcional, para igualar ao seu HTML estático)
       const textoBadge = atrasado ? "Atrasado" : "Em dia";
 
       const botaoHTML = atrasado
@@ -111,7 +112,7 @@ function renderizarEmprestimos(emprestimos) {
           disabled
           title="Livro em atraso não pode ser renovado online"
         >
-          Renovação indisponível
+          Renovação Indisponível
         </button>
       `
         : `
@@ -122,7 +123,7 @@ function renderizarEmprestimos(emprestimos) {
           data-emprestimo-id="${item.id}"
           data-livro="${item.titulo ?? ""}"
         >
-          Renovar empréstimo
+          Renovar Empréstimo
         </button>
       `;
 
@@ -142,11 +143,9 @@ function renderizarEmprestimos(emprestimos) {
               </div>
 
               <div>
-                <strong>Devolução prevista:</strong>
+                <strong>Devolução:</strong>
                 <span class="${classeData}">
-                  ${formatarData(
-                    item.dataDevolucao ?? item.data_prevista_devolucao,
-                  )}
+                  ${formatarData(item.dataDevolucao ?? item.data_prevista_devolucao)}
                 </span>
               </div>
             </div>
@@ -165,16 +164,6 @@ function renderizarEmprestimos(emprestimos) {
     })
     .join("");
 
-  grid.innerHTML = `
-    <div class="section-title">
-      <h2>📖 Empréstimos ativos</h2>
-      <span class="total">
-        Total: ${total} ${total === 1 ? "livro" : "livros"}
-      </span>
-    </div>
-
-    <div class="books">
-      ${cardsHTML}
-    </div>
-  `;
+  // Substitui todo o conteúdo do grid apenas pelos cartões gerados
+  grid.innerHTML = cardsHTML;
 }
