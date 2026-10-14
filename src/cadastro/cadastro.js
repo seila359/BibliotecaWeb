@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { data, error } = await db.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://127.0.0.1:5500/html/login.html",
+        redirectTo: "https://seila359.github.io/BibliotecaWeb/html/login.html",
       },
     });
 
